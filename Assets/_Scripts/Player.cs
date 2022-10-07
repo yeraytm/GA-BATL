@@ -15,42 +15,106 @@ public class Player : MonoBehaviour
 
     private void PlayerInstall(string arg1, string arg2, DateTime arg3)
     {
-
-        throw new NotImplementedException();
+        StartCoroutine(SendUserInstall(arg1, arg2, arg3));
     }
 
     private void PlayerStartSession(DateTime obj)
     {
-        throw new NotImplementedException();
+        StartCoroutine(SendSessionStart(obj));
     }
 
     private void PlayerEndSession(DateTime obj)
     {
-        throw new NotImplementedException();
+        StartCoroutine(SendSessionEnd(obj));
     }
     
     private void PlayerTransaction(int arg1, DateTime arg2)
     {
-        throw new NotImplementedException();
+        StartCoroutine(SendTransaction(arg1, arg2));
     }
 
 
-    public string url = "https://citmalumnes.upc.es/~yeraytm/hello.php";
+    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/hello.php";
     IEnumerator SendUserInstall(string arg1, string arg2, DateTime arg3)
     {
         WWWForm form = new WWWForm();
         form.AddField("name", arg1);
         form.AddField("country", arg2);
-        form.AddField("dateInstall", arg3.ToString());
+        form.AddField("installDate", arg3.ToString("yyyy-MM-dd HH:mm:ss"));
 
-        using (WWW www = new WWW(url))
+        WWW www = new WWW(dbInstalls, form);
+        
+        yield return www;
+
+        // Check for errors
+        if (www.error == null)
         {
-            yield return www;
+            Debug.Log("WWW SUCCESS: " + www.text);
+        }
+        else
+        {
+            Debug.Log("WWW Error: " + www.error);
         }
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //}
+    IEnumerator SendSessionStart(DateTime obj)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("sessionStart", obj.ToString());
+
+        WWW www = new WWW(dbInstalls, form);
+
+        yield return www;
+
+        // Check for errors
+        if (www.error == null)
+        {
+            Debug.Log("WWW SUCCESS: " + www.text);
+        }
+        else
+        {
+            Debug.Log("WWW Error: " + www.error);
+        }
+    }
+
+    IEnumerator SendSessionEnd(DateTime obj)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("sessionEnd", obj.ToString());
+
+        WWW www = new WWW(dbInstalls, form);
+
+        yield return www;
+
+        // Check for errors
+        if (www.error == null)
+        {
+            Debug.Log("WWW SUCCESS: " + www.text);
+        }
+        else
+        {
+            Debug.Log("WWW Error: " + www.error);
+        }
+    }
+
+    IEnumerator SendTransaction(int arg1, DateTime obj)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("itemID", arg1);
+        form.AddField("transactionDate", obj.ToString());
+        
+        WWW www = new WWW(dbInstalls, form);
+
+        yield return www;
+
+        // Check for errors
+        if (www.error == null)
+        {
+            Debug.Log("WWW SUCCESS: " + www.text);
+        }
+        else
+        {
+            Debug.Log("WWW Error: " + www.error);
+        }
+    }
 }
