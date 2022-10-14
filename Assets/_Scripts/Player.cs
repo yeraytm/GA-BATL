@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    uint m_UserID;
+    uint m_SessionID;
+
     private void OnEnable()
     {
         Simulator.OnNewPlayer += PlayerInstall;
@@ -34,7 +37,10 @@ public class Player : MonoBehaviour
     }
 
 
-    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/hello.php";
+    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/usersInfo.php";
+    public string dbSessions = "https://citmalumnes.upc.es/~yeraytm/sessions.php";
+    public string dbTransactions = "https://citmalumnes.upc.es/~yeraytm/transactions.php";
+
     IEnumerator SendUserInstall(string arg1, string arg2, DateTime arg3)
     {
         WWWForm form = new WWWForm();
@@ -49,6 +55,8 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
+            m_UserID = Convert.ToUInt32(www.text);
+            CallbackEvents.OnAddPlayerCallback?.Invoke(m_UserID);
             Debug.Log("WWW SUCCESS: " + www.text);
         }
         else
@@ -60,15 +68,19 @@ public class Player : MonoBehaviour
     IEnumerator SendSessionStart(DateTime obj)
     {
         WWWForm form = new WWWForm();
-        form.AddField("sessionStart", obj.ToString());
+        form.AddField("isNewSession", true.ToString());
+        form.AddField("userID", m_UserID.ToString());
+        form.AddField("sessionStart", obj.ToString("yyyy-MM-dd HH:mm:ss"));
 
-        WWW www = new WWW(dbInstalls, form);
+        WWW www = new WWW(dbSessions, form);
 
         yield return www;
 
         // Check for errors
         if (www.error == null)
         {
+            m_SessionID = Convert.ToUInt32(www.text);
+            CallbackEvents.OnNewSessionCallback?.Invoke(m_SessionID);
             Debug.Log("WWW SUCCESS: " + www.text);
         }
         else
@@ -80,36 +92,41 @@ public class Player : MonoBehaviour
     IEnumerator SendSessionEnd(DateTime obj)
     {
         WWWForm form = new WWWForm();
-        form.AddField("sessionEnd", obj.ToString());
+        form.AddField("isNewSession", false.ToString());
+        form.AddField("sessionID", m_SessionID.ToString());
+        form.AddField("sessionEnd", obj.ToString("yyyy-MM-dd HH:mm:ss"));
 
-        WWW www = new WWW(dbInstalls, form);
+        WWW www = new WWW(dbSessions, form);
 
         yield return www;
 
         // Check for errors
         if (www.error == null)
         {
+            CallbackEvents.OnEndSessionCallback?.Invoke(m_SessionID);
             Debug.Log("WWW SUCCESS: " + www.text);
         }
         else
         {
             Debug.Log("WWW Error: " + www.error);
         }
+
     }
 
     IEnumerator SendTransaction(int arg1, DateTime obj)
     {
         WWWForm form = new WWWForm();
         form.AddField("itemID", arg1);
-        form.AddField("transactionDate", obj.ToString());
+        form.AddField("transactionDate", obj.ToString("yyyy-MM-dd HH:mm:ss"));
         
-        WWW www = new WWW(dbInstalls, form);
+        WWW www = new WWW(dbTransactions, form);
 
         yield return www;
 
         // Check for errors
         if (www.error == null)
         {
+            //CallbackEvents.OnItemBuyCallback?.Invoke()
             Debug.Log("WWW SUCCESS: " + www.text);
         }
         else
