@@ -11,17 +11,12 @@ if(!$conn) {
 }
 echo "Connection success! ";
 
+$sessionStart = $_REQUEST["sessionStart"];
+$sessionEnd = $_REQUEST["sessionEnd"];
 
-$name = $_REQUEST["name"];
-$country = $_REQUEST["country"];
-$installDate = $_REQUEST["installDate"];
-
-// $yearOfBirth =1988;
-// $country = "Pamplona";
-// $installDate = "2022-07-08 22:55:47";
-
-$sql = "INSERT INTO UsersInfo (UserName, Country, DateOfInstall) VALUES ('$name','$country', '$installDate')";
-
+$sql = "INSERT INTO UsersInfo (TimeLogin, TimeLogout) VALUES ('$sessionStart','$sessionEnd')";
+UPDATE Sessions SET TimeLogout = $_REQUEST["sessionEnd"];
+WHERE SessionID = $_RESQUEST["sessionEnd"];
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
