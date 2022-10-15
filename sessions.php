@@ -24,8 +24,7 @@ else {
 }
 
 if ($conn->query($sql) === TRUE) {
-  echo "New session record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
+  $sessionIDRet = $conn->insert_id;
+  echo $sessionIDRet;
 }
 ?>
