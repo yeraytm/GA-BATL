@@ -10,7 +10,7 @@ if(!$conn) {
     die("ERROR: Connection failed: " . mysqli_connect_error());
 }
 
-$userID = $_REQUEST["name"];
+$name = $_REQUEST["name"];
 $country = $_REQUEST["country"];
 $installDate = $_REQUEST["installDate"];
 

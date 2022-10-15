@@ -36,8 +36,7 @@ public class Player : MonoBehaviour
         StartCoroutine(SendTransaction(arg1, arg2));
     }
 
-
-    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/usersInfo.php";
+    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/users_info.php";
     public string dbSessions = "https://citmalumnes.upc.es/~yeraytm/sessions.php";
     public string dbTransactions = "https://citmalumnes.upc.es/~yeraytm/transactions.php";
 
@@ -57,7 +56,7 @@ public class Player : MonoBehaviour
         {
             m_UserID = Convert.ToUInt32(www.text);
             CallbackEvents.OnAddPlayerCallback?.Invoke(m_UserID);
-            Debug.Log("WWW SUCCESS: " + www.text);
+            Debug.Log("WWW SUCCESS | User ID: " + www.text);
         }
         else
         {
@@ -81,7 +80,7 @@ public class Player : MonoBehaviour
         {
             m_SessionID = Convert.ToUInt32(www.text);
             CallbackEvents.OnNewSessionCallback?.Invoke(m_SessionID);
-            Debug.Log("WWW SUCCESS: " + www.text);
+            Debug.Log("WWW SUCCESS | Session ID: " + www.text);
         }
         else
         {
@@ -110,12 +109,12 @@ public class Player : MonoBehaviour
         {
             Debug.Log("WWW Error: " + www.error);
         }
-
     }
 
     IEnumerator SendTransaction(int arg1, DateTime obj)
     {
         WWWForm form = new WWWForm();
+        form.AddField("userID", m_UserID.ToString());
         form.AddField("itemID", arg1);
         form.AddField("transactionDate", obj.ToString("yyyy-MM-dd HH:mm:ss"));
         
@@ -126,7 +125,7 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
-            //CallbackEvents.OnItemBuyCallback?.Invoke()
+            CallbackEvents.OnItemBuyCallback?.Invoke();
             Debug.Log("WWW SUCCESS: " + www.text);
         }
         else
