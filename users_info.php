@@ -10,8 +10,7 @@ if(!$conn) {
     die("ERROR: Connection failed: " . mysqli_connect_error());
 }
 
-$name = $_REQUEST["name"];
-$name = mysql_real_escape_string($name);
+$name = mysql_real_escape_string($_REQUEST["name"]);
 $country = $_REQUEST["country"];
 $installDate = $_REQUEST["installDate"];
 
