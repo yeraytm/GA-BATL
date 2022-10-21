@@ -102,7 +102,6 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
-            Debug.Log("WWW SUCCESS: " + www.text);
             CallbackEvents.OnEndSessionCallback?.Invoke(m_SessionID);
         }
         else
@@ -125,7 +124,6 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
-            Debug.Log("WWW SUCCESS: " + www.text);
             CallbackEvents.OnItemBuyCallback?.Invoke();
         }
         else
