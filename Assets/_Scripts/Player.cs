@@ -36,9 +36,9 @@ public class Player : MonoBehaviour
         StartCoroutine(SendTransaction(arg1, arg2));
     }
 
-    public string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/users_info.php";
-    public string dbSessions = "https://citmalumnes.upc.es/~yeraytm/sessions.php";
-    public string dbTransactions = "https://citmalumnes.upc.es/~yeraytm/transactions.php";
+    private string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/users_info.php";
+    private string dbSessions = "https://citmalumnes.upc.es/~yeraytm/sessions.php";
+    private string dbTransactions = "https://citmalumnes.upc.es/~yeraytm/transactions.php";
 
     IEnumerator SendUserInstall(string arg1, string arg2, DateTime arg3)
     {
@@ -78,9 +78,9 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
+            Debug.Log("WWW SUCCESS | Session ID: " + www.text);
             m_SessionID = Convert.ToUInt32(www.text);
             CallbackEvents.OnNewSessionCallback?.Invoke(m_SessionID);
-            Debug.Log("WWW SUCCESS | Session ID: " + www.text);
         }
         else
         {

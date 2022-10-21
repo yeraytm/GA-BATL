@@ -15,7 +15,7 @@ $isNewSession = $_REQUEST["isNewSession"];
 if($isNewSession) {
   $userID = $_REQUEST["userID"];
   $sessionStart = $_REQUEST["sessionStart"];
-  $sql = "INSERT INTO UsersInfo (UserID, TimeLogin) VALUES ('$userID','$sessionStart')";
+  $sql = "INSERT INTO Sessions (UserID, TimeLogin) VALUES ('$userID','$sessionStart')";
 }
 else {
   $sessionID = $_REQUEST["sessionID"];

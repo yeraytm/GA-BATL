@@ -182,7 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672fb2e7ccda7344393455847e610ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dbInstalls: https://citmalumnes.upc.es/~yeraytm/hello.php
+  dbInstalls: https://citmalumnes.upc.es/~yeraytm/users_info.php
+  dbSessions: https://citmalumnes.upc.es/~yeraytm/sessions.php
+  dbTransactions: https://citmalumnes.upc.es/~yeraytm/transactions.php
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
