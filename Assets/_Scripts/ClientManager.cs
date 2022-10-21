@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class ClientManager : MonoBehaviour
 {
     uint m_UserID;
     uint m_SessionID;
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("userID", m_UserID.ToString());
-        form.AddField("itemID", arg1);
+        form.AddField("itemID", arg1.ToString());
         form.AddField("transactionDate", obj.ToString("yyyy-MM-dd HH:mm:ss"));
         
         WWW www = new WWW(dbTransactions, form);

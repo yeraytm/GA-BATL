@@ -14,11 +14,10 @@ $userID = $_REQUEST["userID"];
 $itemID = $_REQUEST["itemID"];
 $transactionDate = $_REQUEST["transactionDate"];
 
-$sql = "INSERT INTO Transactions (UserID, DateTransaction) VALUES ('$userID', '$transactionDate')";
+$sql = "INSERT INTO Transactions (UserID, ItemID, DateTransaction) VALUES ('$userID', '$itemID','$transactionDate')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "New transaction record created successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
+  $transaction_id = $conn->insert_id;
+  echo $transaction_id;
+}
 ?>
