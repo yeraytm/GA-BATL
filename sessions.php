@@ -24,7 +24,9 @@ else {
 }
 
 if ($conn->query($sql) === TRUE) {
-  $sessionIDRet = $conn->insert_id;
-  echo $sessionIDRet;
+  if($isNewSession) {
+    $sessionIDRet = $conn->insert_id;
+    echo $sessionIDRet;
+  }
 }
 ?>

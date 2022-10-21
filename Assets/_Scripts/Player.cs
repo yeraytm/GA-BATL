@@ -54,9 +54,9 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
+            Debug.Log("WWW SUCCESS | User ID: " + www.text);
             m_UserID = Convert.ToUInt32(www.text);
             CallbackEvents.OnAddPlayerCallback?.Invoke(m_UserID);
-            Debug.Log("WWW SUCCESS | User ID: " + www.text);
         }
         else
         {
@@ -102,8 +102,8 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
-            CallbackEvents.OnEndSessionCallback?.Invoke(m_SessionID);
             Debug.Log("WWW SUCCESS: " + www.text);
+            CallbackEvents.OnEndSessionCallback?.Invoke(m_SessionID);
         }
         else
         {
@@ -125,8 +125,8 @@ public class Player : MonoBehaviour
         // Check for errors
         if (www.error == null)
         {
-            CallbackEvents.OnItemBuyCallback?.Invoke();
             Debug.Log("WWW SUCCESS: " + www.text);
+            CallbackEvents.OnItemBuyCallback?.Invoke();
         }
         else
         {

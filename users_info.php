@@ -11,6 +11,7 @@ if(!$conn) {
 }
 
 $name = $_REQUEST["name"];
+$name = mysql_real_escape_string($name);
 $country = $_REQUEST["country"];
 $installDate = $_REQUEST["installDate"];
 
