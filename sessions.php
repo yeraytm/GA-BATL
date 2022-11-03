@@ -10,23 +10,13 @@ if(!$conn) {
     die("ERROR: Connection failed: " . mysqli_connect_error());
 }
 
-$isNewSession = $_REQUEST["isNewSession"];
+$userID = $_REQUEST["userID"];
+$sessionStart = $_REQUEST["sessionStart"];
 
-if($isNewSession) {
-  $userID = $_REQUEST["userID"];
-  $sessionStart = $_REQUEST["sessionStart"];
-  $sql = "INSERT INTO Sessions (UserID, TimeLogin) VALUES ('$userID','$sessionStart')";
-}
-else {
-  $sessionID = $_REQUEST["sessionID"];
-  $sessionEnd = $_REQUEST["sessionEnd"];
-  $sql = "UPDATE Sessions SET TimeLogout = $sessionEnd WHERE SessionID = $sessionID";
-}
+$sql = "INSERT INTO Sessions (UserID, TimeLogin) VALUES ('$userID','$sessionStart')";
 
 if ($conn->query($sql) === TRUE) {
-  if($isNewSession) {
-    $sessionIDRet = $conn->insert_id;
-    echo $sessionIDRet;
-  }
+    $session_id = $conn->insert_id;
+    echo $session_id;
 }
 ?>

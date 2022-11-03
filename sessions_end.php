@@ -10,11 +10,10 @@ if(!$conn) {
     die("ERROR: Connection failed: " . mysqli_connect_error());
 }
 
-$userID = $_REQUEST["userID"];
-$itemID = $_REQUEST["itemID"];
-$transactionDate = $_REQUEST["transactionDate"];
+$sessionID = $_REQUEST["sessionID"];
+$sessionEnd = $_REQUEST["sessionEnd"];
 
-$sql = "INSERT INTO Transactions (UserID, ItemID, DateTransaction) VALUES ('$userID', '$itemID','$transactionDate')";
+$sql = "UPDATE Sessions SET TimeLogout = '$sessionEnd' WHERE SessionID = '$sessionID'";
 
 if ($conn->query($sql) === TRUE) {}
 ?>

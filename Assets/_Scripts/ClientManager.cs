@@ -38,6 +38,7 @@ public class ClientManager : MonoBehaviour
 
     private string dbInstalls = "https://citmalumnes.upc.es/~yeraytm/users_info.php";
     private string dbSessions = "https://citmalumnes.upc.es/~yeraytm/sessions.php";
+    private string dbSessionsEnd = "https://citmalumnes.upc.es/~yeraytm/sessions_end.php";
     private string dbTransactions = "https://citmalumnes.upc.es/~yeraytm/transactions.php";
 
     IEnumerator SendUserInstall(string arg1, string arg2, DateTime arg3)
@@ -67,7 +68,6 @@ public class ClientManager : MonoBehaviour
     IEnumerator SendSessionStart(DateTime obj)
     {
         WWWForm form = new WWWForm();
-        form.AddField("isNewSession", true.ToString());
         form.AddField("userID", m_UserID.ToString());
         form.AddField("sessionStart", obj.ToString("yyyy-MM-dd HH:mm:ss"));
 
@@ -91,11 +91,10 @@ public class ClientManager : MonoBehaviour
     IEnumerator SendSessionEnd(DateTime obj)
     {
         WWWForm form = new WWWForm();
-        form.AddField("isNewSession", false.ToString());
         form.AddField("sessionID", m_SessionID.ToString());
         form.AddField("sessionEnd", obj.ToString("yyyy-MM-dd HH:mm:ss"));
 
-        WWW www = new WWW(dbSessions, form);
+        WWW www = new WWW(dbSessionsEnd, form);
 
         yield return www;
 
